@@ -12,7 +12,7 @@ import * as React from "react";
 
 export type DataTableProps<Data extends object> = {
   data: Data[];
-  columns: ColumnDef<Data, unknown>[];
+  columns: ColumnDef<Data, any>[];
 };
 
 export function DataTable<Data extends object>({
@@ -43,6 +43,7 @@ export function DataTable<Data extends object>({
                 | undefined;
               return (
                 <Th
+                  fontStyle={"bold"}
                   key={header.id}
                   onClick={header.column.getToggleSortingHandler()}
                   isNumeric={meta?.isNumeric}
