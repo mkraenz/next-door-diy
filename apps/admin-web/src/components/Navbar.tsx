@@ -26,10 +26,10 @@ import { useTranslation } from "react-i18next";
 import LogoutButton from "../auth/LogoutButton";
 
 const navData = [
-  { name: "Calendar", href: "/admin/calendar", icon: CalendarIcon },
-  { name: "Availabilities", href: "/admin/availabilities", icon: TimeIcon },
-  { name: "Contacts", href: "/admin/contacts", icon: ChatIcon },
-  { name: "Bookings", href: "/admin/bookings", icon: EmailIcon },
+  { name: "Calendar", href: "/calendar", icon: CalendarIcon },
+  { name: "Availabilities", href: "/availabilities", icon: TimeIcon },
+  { name: "Contacts", href: "/contacts", icon: ChatIcon },
+  { name: "Bookings", href: "/bookings", icon: EmailIcon },
   { name: "Home", href: "/", icon: ViewIcon, withDividerTop: true },
 ] satisfies {
   name: string;
@@ -44,9 +44,7 @@ const Navbar: FC<Props> = (props) => {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
-  //   const router = useRouter();
 
-  //   const navigateTo = (href: string) => () => router.push(href);
   return (
     <>
       <IconButton
@@ -78,11 +76,12 @@ const Navbar: FC<Props> = (props) => {
                 >
                   {item.withDividerTop && <Divider />}
                   <Button
+                    as={"a"}
+                    href={item.href}
                     key={item.name}
-                    // onClick={navigateTo(item.href)}
                     leftIcon={<item.icon boxSize={6} />}
                     variant="nav"
-                    // bg={router.pathname === item.href ? "brand.800" : undefined}
+                    // bg={router.pathname === item.href ? "blue.200" : undefined}
                   >
                     {item.name}
                   </Button>

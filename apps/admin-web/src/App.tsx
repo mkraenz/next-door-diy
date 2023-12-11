@@ -3,12 +3,13 @@ import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext";
 import AuthenticatedApp from "./auth/AuthenticatedApp";
 import { FirebaseProvider } from "./components/FirebaseProvider";
 import createI18n from "./localization/i18n";
+import { router } from "./router";
 import { store } from "./store";
-import Test from "./test/Test";
 import { theme } from "./theme";
 
 const firebaseConfig = {
@@ -34,7 +35,7 @@ const App = () => {
           <ChakraProvider theme={theme}>
             <I18nextProvider i18n={i18n} defaultNS={"translation"}>
               <AuthenticatedApp>
-                <Test />
+                <RouterProvider router={router} />
               </AuthenticatedApp>
             </I18nextProvider>
           </ChakraProvider>
