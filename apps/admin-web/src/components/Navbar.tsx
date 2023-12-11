@@ -22,6 +22,7 @@ import {
 } from "@chakra-ui/react";
 import type { FC } from "react";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import LogoutButton from "../auth/LogoutButton";
 
 const navData = [
@@ -40,6 +41,7 @@ const navData = [
 interface Props {}
 
 const Navbar: FC<Props> = (props) => {
+  const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
   //   const router = useRouter();
@@ -63,7 +65,7 @@ const Navbar: FC<Props> = (props) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Next Door DIY Admin</DrawerHeader>
+          <DrawerHeader>{t("appName")}</DrawerHeader>
 
           <DrawerBody>
             <Stack alignItems={"flex-start"}>
