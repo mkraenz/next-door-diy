@@ -2,7 +2,8 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["{projectRoot}/dist"],
+      "inputs": ["noMarkdown", "^noMarkdown"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/lib"],
       "cache": true
     },
     "lint": {
@@ -12,8 +13,12 @@
       "cache": true
     },
     "test": {
+      "inputs": ["noMarkdown", "^noMarkdown"],
       "cache": true
     }
+  },
+  "namedInputs": {
+    "noMarkdown": ["!{projectRoot}/**/*.md"]
   },
   "affected": {
     "defaultBase": "main"
