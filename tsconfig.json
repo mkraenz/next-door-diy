@@ -9,8 +9,6 @@
     "incremental": true,
     "sourceMap": true,
 
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",

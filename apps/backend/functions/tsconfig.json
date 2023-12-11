@@ -3,6 +3,7 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "module": "commonjs",
+    "moduleResolution": "Node",
     "noImplicitReturns": true,
     "outDir": "lib",
     "target": "es2017"
