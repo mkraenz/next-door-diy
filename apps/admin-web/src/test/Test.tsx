@@ -1,12 +1,11 @@
-import LogoutButton from "../auth/LogoutButton";
+import Layout from "../components/Layout";
 import TableTest from "./TableTest";
 
 const Test = () => {
   return (
-    <>
-      <LogoutButton />
+    <Layout>
       <TableTest />
-    </>
+    </Layout>
   );
 };
 
