@@ -1,7 +1,13 @@
+import LogoutButton from "../auth/LogoutButton";
 import TableTest from "./TableTest";
 
 const Test = () => {
-  return <TableTest />;
+  return (
+    <>
+      <LogoutButton />
+      <TableTest />
+    </>
+  );
 };
 
 export default Test;
