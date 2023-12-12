@@ -1,6 +1,6 @@
 import { Center, Spinner, Text, VStack } from "@chakra-ui/react";
 import { FC, PropsWithChildren } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./AuthProvider";
 import LoginPage from "./LoginPage";
 
 const AuthenticatedApp: FC<PropsWithChildren> = ({ children }) => {

@@ -9,7 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./AuthProvider";
 
 type FormData = {
   email: string;

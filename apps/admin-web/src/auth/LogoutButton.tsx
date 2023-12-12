@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { FC } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./AuthProvider";
 
 interface Props {}
 
