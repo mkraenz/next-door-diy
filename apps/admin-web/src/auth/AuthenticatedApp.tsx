@@ -5,12 +5,13 @@ import LoginPage from "./LoginPage";
 
 const AuthenticatedApp: FC<PropsWithChildren> = ({ children }) => {
   const { initiated, authenticated } = useAuth();
+
   if (!initiated) {
     return (
       <Center minH={"100vh"}>
         <VStack>
-          <Spinner size={"xl"} />
-          <Text>Attempting to resume last session...</Text>
+          <Spinner size={"xl"} color="blue.400" />
+          <Text>Resuming last session...</Text>
         </VStack>
       </Center>
     );

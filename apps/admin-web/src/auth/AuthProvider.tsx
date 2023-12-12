@@ -49,6 +49,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
   const [initiated, setInitiated] = useState(false);
+  console.log({ initiated });
   useEffect(() => {
     // without this, auth.currentUser will be null on first render and thus users will always be logged out
     const waitForInitialAuthState = async () => {

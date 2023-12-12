@@ -1,6 +1,6 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import type { FC, PropsWithChildren } from "react";
-import AdminNav from "./Navbar";
+import Navbar from "./Navbar";
 
 const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -15,7 +15,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       gap="1"
     >
       <GridItem area={"nav"}>
-        <AdminNav />
+        <Navbar />
       </GridItem>
       <GridItem area={"main"}>{children}</GridItem>
     </Grid>

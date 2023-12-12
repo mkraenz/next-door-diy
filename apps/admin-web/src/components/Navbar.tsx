@@ -23,6 +23,7 @@ import {
 import type { FC } from "react";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 
 const navData = [
@@ -42,6 +43,7 @@ interface Props {}
 
 const Navbar: FC<Props> = (props) => {
   const { t } = useTranslation();
+  const nav = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
 
@@ -52,7 +54,7 @@ const Navbar: FC<Props> = (props) => {
         aria-label={"open drawer navigation menu"}
         ref={btnRef}
         onClick={onOpen}
-        m={{ md: 8, base: 2 }}
+        m={2}
       />
       <Drawer
         isOpen={isOpen}
@@ -77,11 +79,11 @@ const Navbar: FC<Props> = (props) => {
                   {item.withDividerTop && <Divider />}
                   <Button
                     as={"a"}
-                    href={item.href}
+                    onClick={() => nav(item.href)}
                     key={item.name}
                     leftIcon={<item.icon boxSize={6} />}
                     variant="nav"
-                    // bg={router.pathname === item.href ? "blue.200" : undefined}
+                    // bg={pathname === item.href ? "blue.200" : undefined}
                   >
                     {item.name}
                   </Button>

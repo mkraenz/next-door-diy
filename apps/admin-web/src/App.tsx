@@ -5,7 +5,6 @@ import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthProvider";
-import AuthenticatedApp from "./auth/AuthenticatedApp";
 import { FirebaseProvider } from "./components/FirebaseProvider";
 import createI18n from "./localization/i18n";
 import { router } from "./router";
@@ -34,9 +33,7 @@ const App = () => {
         <AuthProvider>
           <ChakraProvider theme={theme}>
             <I18nextProvider i18n={i18n} defaultNS={"translation"}>
-              <AuthenticatedApp>
-                <RouterProvider router={router} />
-              </AuthenticatedApp>
+              <RouterProvider router={router} />
             </I18nextProvider>
           </ChakraProvider>
         </AuthProvider>
