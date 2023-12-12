@@ -21,7 +21,7 @@ import {
 import type { FC } from "react";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 
 const homeRoute = "/";
@@ -37,11 +37,10 @@ const navData = [
   withDividerTop?: true;
 }[];
 
-interface Props {}
-
-const Navbar: FC<Props> = (props) => {
+const Navbar: FC = () => {
   const { t } = useTranslation();
   const nav = useNavigate();
+  const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
 
@@ -79,18 +78,18 @@ const Navbar: FC<Props> = (props) => {
               {navData.map((item) => (
                 <Stack
                   key={item.name}
-                  _hover={{ bg: "blue.100" }}
+                  _hover={{ bg: "blue.200" }}
                   width={"full"}
                   align={"flex-start"}
                   cursor={"pointer"}
                   as={"a"}
                   onClick={() => handleClick(item.href)}
+                  bg={location.pathname === item.href ? "blue.100" : undefined}
                 >
                   <Button
                     variant="nav"
                     key={item.name}
                     leftIcon={<item.icon boxSize={6} />}
-                    // bg={pathname === item.href ? "blue.200" : undefined}
                   >
                     {item.name}
                   </Button>
@@ -99,7 +98,7 @@ const Navbar: FC<Props> = (props) => {
             </Stack>
           </DrawerBody>
           <DrawerFooter borderTopWidth="1px">
-            <LogoutButton />
+            <LogoutButton afterSignout={onClose} />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

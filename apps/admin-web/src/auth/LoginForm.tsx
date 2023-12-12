@@ -9,6 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 
 type FormData = {
@@ -18,6 +19,7 @@ type FormData = {
 
 const LoginForm: FC = () => {
   const { error, signIn } = useAuth();
+  const nav = useNavigate();
 
   const {
     handleSubmit,
@@ -25,7 +27,10 @@ const LoginForm: FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<FormData>();
 
-  const onSubmit = handleSubmit(signIn);
+  const onSubmit = handleSubmit(async (data) => {
+    await signIn(data);
+    nav("/");
+  });
 
   return (
     <form onSubmit={onSubmit}>

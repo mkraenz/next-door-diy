@@ -47,6 +47,7 @@ export const useTheme = () => useContext(AuthContext);
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const { auth } = useFirebase();
   const [error, setError] = useState<Error | null>(null);
+  const [user, setUser] = useState(auth.currentUser); // separate tracking of user to ensure we rerender on auth state changes
   const [loading, setLoading] = useState(false);
   const [initiated, setInitiated] = useState(false);
   useEffect(() => {
@@ -56,6 +57,13 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       setInitiated(true);
     };
     waitForInitialAuthState();
+  }, [setLoading, auth]);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((newUser) => {
+      setUser(newUser);
+    });
+    return unsubscribe;
   }, [setLoading, auth]);
 
   const clearError = () => setError(null);
@@ -105,7 +113,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user: auth.currentUser,
+        user,
         authenticated: Boolean(auth.currentUser),
         createAccount,
         signIn,

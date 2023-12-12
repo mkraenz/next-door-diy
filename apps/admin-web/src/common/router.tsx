@@ -17,10 +17,6 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "signin",
-        element: <LoginPage />,
-      },
-      {
         element: (
           <AuthenticatedApp>
             <Outlet />
@@ -40,20 +36,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/",
-    element: (
-      <AuthenticatedApp>
-        <Test />
-      </AuthenticatedApp>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/calendar",
-    element: (
-      <AuthenticatedApp>
-        <Calendar />
-      </AuthenticatedApp>
-    ),
+    path: "/signin",
+    element: <LoginPage />,
   },
 ]);
