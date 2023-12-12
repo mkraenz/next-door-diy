@@ -5,9 +5,9 @@ import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthProvider";
+import { router } from "./common/router";
 import { FirebaseProvider } from "./components/FirebaseProvider";
 import createI18n from "./localization/i18n";
-import { router } from "./router";
 import { store } from "./store";
 import { theme } from "./theme";
 

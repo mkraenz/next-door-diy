@@ -13,6 +13,7 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       gridTemplateRows={{ md: "1fr", base: "fit-content(20px) 1fr" }}
       gridTemplateColumns={{ md: "fit-content(0px) 1fr", base: "1fr" }}
       gap="1"
+      minH={"100vh"}
     >
       <GridItem area={"nav"}>
         <Navbar />

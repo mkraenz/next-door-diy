@@ -4,11 +4,9 @@ import {
   ChatIcon,
   EmailIcon,
   TimeIcon,
-  ViewIcon,
 } from "@chakra-ui/icons";
 import {
   Button,
-  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -26,12 +24,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "../auth/LogoutButton";
 
+const homeRoute = "/";
 const navData = [
   { name: "Calendar", href: "/calendar", icon: CalendarIcon },
   { name: "Availabilities", href: "/availabilities", icon: TimeIcon },
   { name: "Contacts", href: "/contacts", icon: ChatIcon },
   { name: "Bookings", href: "/bookings", icon: EmailIcon },
-  { name: "Home", href: "/", icon: ViewIcon, withDividerTop: true },
 ] satisfies {
   name: string;
   href: string;
@@ -47,6 +45,10 @@ const Navbar: FC<Props> = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
 
+  const handleClick = (href: string) => {
+    nav(href);
+    onClose();
+  };
   return (
     <>
       <IconButton
@@ -65,7 +67,12 @@ const Navbar: FC<Props> = (props) => {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>{t("appName")}</DrawerHeader>
+          <DrawerHeader
+            cursor={"pointer"}
+            onClick={() => handleClick(homeRoute)}
+          >
+            {t("appName")}
+          </DrawerHeader>
 
           <DrawerBody>
             <Stack alignItems={"flex-start"}>
@@ -75,14 +82,14 @@ const Navbar: FC<Props> = (props) => {
                   _hover={{ bg: "blue.100" }}
                   width={"full"}
                   align={"flex-start"}
+                  cursor={"pointer"}
+                  as={"a"}
+                  onClick={() => handleClick(item.href)}
                 >
-                  {item.withDividerTop && <Divider />}
                   <Button
-                    as={"a"}
-                    onClick={() => nav(item.href)}
+                    variant="nav"
                     key={item.name}
                     leftIcon={<item.icon boxSize={6} />}
-                    variant="nav"
                     // bg={pathname === item.href ? "blue.200" : undefined}
                   >
                     {item.name}

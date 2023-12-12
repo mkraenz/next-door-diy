@@ -17,7 +17,7 @@ type FormData = {
 };
 
 const LoginForm: FC = () => {
-  const { createAccount, error, signIn } = useAuth();
+  const { error, signIn } = useAuth();
 
   const {
     handleSubmit,
@@ -26,7 +26,6 @@ const LoginForm: FC = () => {
   } = useForm<FormData>();
 
   const onSubmit = handleSubmit(signIn);
-  console.log(error);
 
   return (
     <form onSubmit={onSubmit}>

@@ -11,4 +11,4 @@
 
 Q: I see the loading spinner saying "Resuming last session" on navigating to a page. Why is that?
 
-A: You need to use react-router-dom's navigation `useNavigate()` or similar instead of a plain href. Otherwise the page the session will be lost.
+A: You need to use react-router-dom's navigation `useNavigate()` or `import {Link} from 'react-router-dom'` similar instead of a plain href. Otherwise the page the session will be lost.

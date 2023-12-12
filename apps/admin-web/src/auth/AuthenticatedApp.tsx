@@ -1,10 +1,11 @@
 import { Center, Spinner, Text, VStack } from "@chakra-ui/react";
 import { FC, PropsWithChildren } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
-import LoginPage from "./LoginPage";
 
 const AuthenticatedApp: FC<PropsWithChildren> = ({ children }) => {
   const { initiated, authenticated } = useAuth();
+  const nav = useNavigate();
 
   if (!initiated) {
     return (
@@ -19,7 +20,7 @@ const AuthenticatedApp: FC<PropsWithChildren> = ({ children }) => {
   if (authenticated) {
     return children;
   }
-  return <LoginPage />;
+  return <Navigate to={"/signin"} replace />;
 };
 
 export default AuthenticatedApp;
