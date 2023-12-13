@@ -2,17 +2,9 @@
 
 /** @type {import("prettier").Config} */
 const config = {
-    trailingComma: 'es5',
-    tabWidth: 4,
-    singleQuote: true,
-    overrides: [
-        {
-            files: ['*.yml', '*.yaml', '*.json', '*.webmanifest'],
-            options: {
-                tabWidth: 2,
-            },
-        },
-    ],
+  trailingComma: 'es5',
+  tabWidth: 2,
+  singleQuote: true,
 };
 
 export default config;

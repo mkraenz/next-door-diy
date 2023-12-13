@@ -5,14 +5,14 @@ import LoginForm from './LoginForm';
 interface Props {}
 
 const LoginPage: FC<Props> = () => {
-    return (
-        <Center minH={'100vh'}>
-            <VStack>
-                <Heading mb={4}>Next Door DIY</Heading>
-                <LoginForm />
-            </VStack>
-        </Center>
-    );
+  return (
+    <Center minH={'100vh'}>
+      <VStack>
+        <Heading mb={4}>Next Door DIY</Heading>
+        <LoginForm />
+      </VStack>
+    </Center>
+  );
 };
 
 export default LoginPage;

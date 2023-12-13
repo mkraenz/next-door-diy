@@ -4,24 +4,24 @@ import { Auth, getAuth } from 'firebase/auth';
 import { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 type FirebaseState = {
-    auth: Auth;
+  auth: Auth;
 };
 
 const defaultFirebaseState: FirebaseState = {
-    auth: {} as Auth,
+  auth: {} as Auth,
 };
 
 export const FirebaseContext =
-    createContext<FirebaseState>(defaultFirebaseState);
+  createContext<FirebaseState>(defaultFirebaseState);
 
 export const FirebaseProvider: FC<
-    PropsWithChildren<{ app: FirebaseApp; analytics: Analytics }>
+  PropsWithChildren<{ app: FirebaseApp; analytics: Analytics }>
 > = ({ children, app }) => {
-    const { auth } = useMemo(() => ({ auth: getAuth(app) }), [app]);
+  const { auth } = useMemo(() => ({ auth: getAuth(app) }), [app]);
 
-    return (
-        <FirebaseContext.Provider value={{ auth }}>
-            {children}
-        </FirebaseContext.Provider>
-    );
+  return (
+    <FirebaseContext.Provider value={{ auth }}>
+      {children}
+    </FirebaseContext.Provider>
+  );
 };

@@ -7,36 +7,36 @@ import Layout from '../components/Layout';
 import Test from '../test/Test';
 
 export const router = createBrowserRouter([
-    {
-        path: '/',
+  {
+    path: '/',
+    element: (
+      <Layout>
+        <Outlet />
+      </Layout>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
         element: (
-            <Layout>
-                <Outlet />
-            </Layout>
+          <AuthenticatedApp>
+            <Outlet />
+          </AuthenticatedApp>
         ),
-        errorElement: <ErrorPage />,
         children: [
-            {
-                element: (
-                    <AuthenticatedApp>
-                        <Outlet />
-                    </AuthenticatedApp>
-                ),
-                children: [
-                    {
-                        path: '',
-                        element: <Test />,
-                    },
-                    {
-                        path: 'calendar',
-                        element: <Calendar />,
-                    },
-                ],
-            },
+          {
+            path: '',
+            element: <Test />,
+          },
+          {
+            path: 'calendar',
+            element: <Calendar />,
+          },
         ],
-    },
-    {
-        path: '/signin',
-        element: <LoginPage />,
-    },
+      },
+    ],
+  },
+  {
+    path: '/signin',
+    element: <LoginPage />,
+  },
 ]);
