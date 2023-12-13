@@ -10,4 +10,4 @@ gh secret set NX_CLOUD_ACCESS_TOKEN --body "secret"
 
 ## Links
 
--   [nx cloud](https://cloud.nx.app/orgs/657a07188090a230ff3649a6/workspaces/657a0729bef2551b5c600ef7/overview)
+- [nx cloud](https://cloud.nx.app/orgs/657a07188090a230ff3649a6/workspaces/657a0729bef2551b5c600ef7/overview)

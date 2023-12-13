@@ -11,20 +11,20 @@ import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 // };
 
 export const theme = extendTheme(
-    {
-        components: {
-            Button: {
-                baseStyle: {
-                    textTransform: 'capitalize',
-                },
-            },
-            variants: {
-                base: {},
-            },
-            defaultProps: {
-                variant: 'base',
-            },
+  {
+    components: {
+      Button: {
+        baseStyle: {
+          textTransform: 'capitalize',
         },
+      },
+      variants: {
+        base: {},
+      },
+      defaultProps: {
+        variant: 'base',
+      },
     },
-    withDefaultColorScheme({ colorScheme: 'blue' })
+  },
+  withDefaultColorScheme({ colorScheme: 'blue' })
 );

@@ -4,25 +4,25 @@ import HttpApi from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 
 const httpApi = new HttpApi(null, {
-    loadPath: '/locales/{{lng}}/{{ns}}.json',
+  loadPath: '/locales/{{lng}}/{{ns}}.json',
 });
 const createI18n = () => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises -- i18next is a singleton and the I18nProvider should take care of it hopefully
-    i18next
-        .use(httpApi)
-        .use(LanguageDetector)
-        .use(initReactI18next)
-        .init({
-            load: 'languageOnly', // avoid fetching all translation files
-            lng: import.meta.env.NODE_ENV === 'test' ? 'citest' : undefined, // if you're using a language detector, do not define the lng option
-            debug: false,
-            interpolation: {
-                escapeValue: false,
-            },
-            fallbackLng: 'en',
-            appendNamespaceToCIMode: true,
-        });
-    return i18next;
+  // eslint-disable-next-line @typescript-eslint/no-floating-promises -- i18next is a singleton and the I18nProvider should take care of it hopefully
+  i18next
+    .use(httpApi)
+    .use(LanguageDetector)
+    .use(initReactI18next)
+    .init({
+      load: 'languageOnly', // avoid fetching all translation files
+      lng: import.meta.env.NODE_ENV === 'test' ? 'citest' : undefined, // if you're using a language detector, do not define the lng option
+      debug: false,
+      interpolation: {
+        escapeValue: false,
+      },
+      fallbackLng: 'en',
+      appendNamespaceToCIMode: true,
+    });
+  return i18next;
 };
 
 export default createI18n;

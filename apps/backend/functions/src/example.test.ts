@@ -1,3 +1,3 @@
 it('makes the ci work', () => {
-    expect(true).toBe(true);
+  expect(true).toBe(true);
 });
