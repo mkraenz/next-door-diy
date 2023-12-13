@@ -22,5 +22,6 @@
   },
   "affected": {
     "defaultBase": "main"
-  }
+  },
+  "nxCloudAccessToken": "set via env var NX_CLOUD_ACCESS_TOKEN"
 }

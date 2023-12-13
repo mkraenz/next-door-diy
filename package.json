@@ -11,5 +11,9 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "nx": "17.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mkraenz/next-door-diy.git"
   }
 }
