@@ -1,5 +1,4 @@
 import { Button, Heading, Image, Text, VStack } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { useNavigate, useRouteError } from "react-router-dom";
 
 const ErrorDisplay = () => {
@@ -8,9 +7,6 @@ const ErrorDisplay = () => {
     statusText?: string;
     status?: number;
   };
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
 
   const isHttpErrorCode =
     error.status && error.status > 400 && error.status < 600;
