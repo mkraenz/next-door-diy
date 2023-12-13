@@ -1,4 +1,4 @@
-import { useAuth } from '../auth/AuthProvider';
+import { useAuth } from '../hooks/auth';
 import ErrorDisplay from './ErrorDisplay';
 import Layout from './Layout';
 

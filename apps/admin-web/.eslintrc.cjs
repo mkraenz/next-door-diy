@@ -14,8 +14,13 @@ module.exports = {
             'warn',
             { allowConstantExport: true },
         ],
-        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/undefined': 'off',
+        '@typescript-eslint/no-misused-promises': 'off',
         'react-hooks/exhaustive-deps': 'warn',
+    },
+    parserOptions: {
+        project: ['./tsconfig.json'],
     },
 };

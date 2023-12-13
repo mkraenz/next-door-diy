@@ -1,10 +1,10 @@
 import { Button, Heading, VStack } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../hooks/auth';
 
 interface Props {}
 
-const Login: FC<Props> = (props) => {
+const Login: FC<Props> = () => {
     const { createAccount, error, loading, signIn, authenticated, signOut } =
         useAuth();
     const email = 'example';

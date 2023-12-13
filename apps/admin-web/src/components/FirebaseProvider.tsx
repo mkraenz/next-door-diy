@@ -1,15 +1,7 @@
 import { Analytics } from 'firebase/analytics';
 import { FirebaseApp } from 'firebase/app';
 import { Auth, getAuth } from 'firebase/auth';
-import {
-    FC,
-    PropsWithChildren,
-    createContext,
-    useContext,
-    useMemo,
-} from 'react';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { FC, PropsWithChildren, createContext, useMemo } from 'react';
 
 type FirebaseState = {
     auth: Auth;
@@ -19,9 +11,8 @@ const defaultFirebaseState: FirebaseState = {
     auth: {} as Auth,
 };
 
-const FirebaseContext = createContext<FirebaseState>(defaultFirebaseState);
-
-export const useTheme = () => useContext(FirebaseContext);
+export const FirebaseContext =
+    createContext<FirebaseState>(defaultFirebaseState);
 
 export const FirebaseProvider: FC<
     PropsWithChildren<{ app: FirebaseApp; analytics: Analytics }>
@@ -34,5 +25,3 @@ export const FirebaseProvider: FC<
         </FirebaseContext.Provider>
     );
 };
-
-export const useFirebase = () => useContext(FirebaseContext);

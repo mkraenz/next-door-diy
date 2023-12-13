@@ -8,40 +8,35 @@ import {
     FC,
     PropsWithChildren,
     createContext,
-    useContext,
     useEffect,
     useState,
 } from 'react';
-import { useFirebase } from '../components/FirebaseProvider';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { useFirebase } from '../hooks/firebase';
 
 type Credentials = { email: string; password: string };
 type AuthState = {
     user: User | null;
-    createAccount: (credentials: Credentials) => void;
-    signIn: (credentials: Credentials) => void;
+    createAccount: (credentials: Credentials) => Promise<void>;
+    signIn: (credentials: Credentials) => Promise<void>;
+    signOut: () => Promise<void>;
     loading: boolean;
     initiated: boolean;
     error: null | (Error & { code?: string | number });
     authenticated: boolean;
-    signOut: () => void;
 };
 
 const defaultAuthState: AuthState = {
     user: null,
-    createAccount: () => {},
-    signIn: () => {},
+    createAccount: async () => {},
+    signIn: async () => {},
     loading: false,
     initiated: false,
     error: null,
     authenticated: false,
-    signOut: () => {},
+    signOut: async () => {},
 };
 
-const AuthContext = createContext<AuthState>(defaultAuthState);
-
-export const useTheme = () => useContext(AuthContext);
+export const AuthContext = createContext<AuthState>(defaultAuthState);
 
 /** IMPORTANT: Use within a FirebaseProvider. */
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -56,7 +51,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
             await auth.authStateReady();
             setInitiated(true);
         };
-        waitForInitialAuthState();
+        void waitForInitialAuthState();
     }, [setLoading, auth]);
 
     useEffect(() => {
@@ -96,7 +91,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     };
 
     const signIn = async ({ email, password }: Credentials) => {
-        debugger;
         try {
             setLoading(true);
             clearError();
@@ -127,5 +121,3 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         </AuthContext.Provider>
     );
 };
-
-export const useAuth = () => useContext(AuthContext);
