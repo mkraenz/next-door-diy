@@ -1,19 +1,25 @@
 {
-  "name": "diy-next-door",
-  "version": "1.0.0",
-  "engines": {
-    "node": "20",
-    "pnpm": "8.x.x"
-  },
-  "keywords": [],
-  "author": "Mirco Kraenz",
-  "license": "UNLICENSED",
-  "devDependencies": {
-    "nx": "17.2.0",
-    "prettier": "^3.1.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mkraenz/next-door-diy.git"
-  }
+    "name": "diy-next-door",
+    "version": "1.0.0",
+    "engines": {
+        "node": "20",
+        "pnpm": "8.x.x"
+    },
+    "keywords": [],
+    "author": "Mirco Kraenz",
+    "license": "UNLICENSED",
+    "scripts": {
+        "prepare": "husky install"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^18.4.3",
+        "@commitlint/config-conventional": "^18.4.3",
+        "husky": "^8.0.0",
+        "nx": "17.2.0",
+        "prettier": "^3.1.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mkraenz/next-door-diy.git"
+    }
 }

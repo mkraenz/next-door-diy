@@ -3,3 +3,6 @@
 **/lib/
 **/.nx/
 **/.cache/
+**/pnpm-lock.yaml
+**/yarn.lock
+**/package-lock.json
