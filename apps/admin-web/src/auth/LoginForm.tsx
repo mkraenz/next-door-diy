@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
@@ -19,6 +20,7 @@ type FormData = {
 const LoginForm: FC = () => {
     const { error, signIn } = useAuth();
     const nav = useNavigate();
+    const { t } = useTranslation();
 
     const {
         handleSubmit,
@@ -73,7 +75,7 @@ const LoginForm: FC = () => {
                     </FormErrorMessage>
                 </FormControl>
                 <Button mt={4} isLoading={isSubmitting} type="submit">
-                    Sign In
+                    {t('signin')}
                 </Button>
                 <Text color="red">{error && 'Invalid credentials.'}</Text>
             </VStack>

@@ -16,6 +16,7 @@ import {
     DrawerOverlay,
     IconButton,
     Stack,
+    Tooltip,
     useDisclosure,
 } from '@chakra-ui/react';
 import type { FC } from 'react';
@@ -26,12 +27,12 @@ import LogoutButton from '../auth/LogoutButton';
 
 const homeRoute = '/';
 const navData = [
-    { name: 'Calendar', href: '/calendar', icon: CalendarIcon },
-    { name: 'Availabilities', href: '/availabilities', icon: TimeIcon },
-    { name: 'Contacts', href: '/contacts', icon: ChatIcon },
-    { name: 'Bookings', href: '/bookings', icon: EmailIcon },
+    { nameTKey: 'Calendar', href: '/calendar', icon: CalendarIcon },
+    { nameTKey: 'Availabilities', href: '/availabilities', icon: TimeIcon },
+    { nameTKey: 'Contacts', href: '/contacts', icon: ChatIcon },
+    { nameTKey: 'Bookings', href: '/bookings', icon: EmailIcon },
 ] satisfies {
-    name: string;
+    nameTKey: string;
     href: string;
     icon: unknown;
     withDividerTop?: true;
@@ -50,13 +51,15 @@ const Navbar: FC = () => {
     };
     return (
         <>
-            <IconButton
-                icon={<ArrowRightIcon />}
-                aria-label={'open drawer navigation menu'}
-                ref={btnRef}
-                onClick={onOpen}
-                m={2}
-            />
+            <Tooltip label={t('Open drawer navigation')}>
+                <IconButton
+                    icon={<ArrowRightIcon />}
+                    aria-label={t('Open drawer navigation')}
+                    ref={btnRef}
+                    onClick={onOpen}
+                    m={2}
+                />
+            </Tooltip>
             <Drawer
                 isOpen={isOpen}
                 placement={'left'}
@@ -65,7 +68,9 @@ const Navbar: FC = () => {
             >
                 <DrawerOverlay />
                 <DrawerContent>
-                    <DrawerCloseButton />
+                    <DrawerCloseButton
+                        aria-label={t('Close drawer navigation')}
+                    />
                     <DrawerHeader
                         cursor={'pointer'}
                         onClick={() => handleClick(homeRoute)}
@@ -77,25 +82,26 @@ const Navbar: FC = () => {
                         <Stack alignItems={'flex-start'}>
                             {navData.map((item) => (
                                 <Stack
-                                    key={item.name}
-                                    _hover={{ bg: 'blue.200' }}
+                                    key={item.nameTKey}
                                     width={'full'}
                                     align={'flex-start'}
-                                    cursor={'pointer'}
-                                    as={'a'}
                                     onClick={() => handleClick(item.href)}
-                                    bg={
-                                        location.pathname === item.href
-                                            ? 'blue.100'
-                                            : undefined
-                                    }
+                                    as={'a'}
                                 >
                                     <Button
                                         variant="nav"
-                                        key={item.name}
+                                        key={item.nameTKey}
                                         leftIcon={<item.icon boxSize={6} />}
+                                        width={'full'}
+                                        justifyContent={'flex-start'}
+                                        bg={
+                                            location.pathname === item.href
+                                                ? 'blue.100'
+                                                : undefined
+                                        }
+                                        _hover={{ bg: 'blue.200' }}
                                     >
-                                        {item.name}
+                                        {t(item.nameTKey)}
                                     </Button>
                                 </Stack>
                             ))}
