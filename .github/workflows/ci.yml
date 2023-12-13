@@ -43,5 +43,10 @@ jobs:
       # This line is needed for nx affected to work when CI is running on a PR
       - run: git branch --track main origin/main
 
-      - run: npx nx format:check
-      - run: npx nx affected -t lint,test,build --parallel=3
+      - name: Prettier check
+        run: npx nx format:check
+
+      - name: lint, test, build affected projects
+        run: npx nx affected -t lint,test,build --parallel=3
+        env:
+          NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
