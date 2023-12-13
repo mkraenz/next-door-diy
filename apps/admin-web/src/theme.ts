@@ -1,5 +1,5 @@
 // 1. Import the extendTheme function
-import { extendTheme, withDefaultColorScheme } from "@chakra-ui/react";
+import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 
 // 2. Extend the theme to include custom colors, fonts, etc
 // const colors = {
@@ -11,6 +11,6 @@ import { extendTheme, withDefaultColorScheme } from "@chakra-ui/react";
 // };
 
 export const theme = extendTheme(
-  {},
-  withDefaultColorScheme({ colorScheme: "blue" })
+    {},
+    withDefaultColorScheme({ colorScheme: 'blue' })
 );
