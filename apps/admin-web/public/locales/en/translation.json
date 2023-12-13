@@ -2,5 +2,7 @@
   "appName": "Next Door DIY Admin",
   "cancel": "cancel",
   "confirm": "confirm",
-  "close": "close"
+  "close": "close",
+  "signin": "sign in",
+  "signout": "sign out"
 }

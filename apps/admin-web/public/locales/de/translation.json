@@ -2,5 +2,7 @@
   "appName": "DIY Nebenan Admin",
   "cancel": "abbrechen",
   "confirm": "bestätigen",
-  "close": "schließen"
+  "close": "schließen",
+  "signin": "anmelden",
+  "signout": "abmelden"
 }
