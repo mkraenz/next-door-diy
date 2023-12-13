@@ -4,7 +4,7 @@ import LoginForm from './LoginForm';
 
 interface Props {}
 
-const LoginPage: FC<Props> = (props) => {
+const LoginPage: FC<Props> = () => {
     return (
         <Center minH={'100vh'}>
             <VStack>

@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import {
     Button,
     FormControl,
@@ -8,9 +6,10 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react';
+import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../hooks/auth';
 
 type FormData = {
     email: string;

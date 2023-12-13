@@ -1,11 +1,10 @@
 import { Center, Spinner, Text, VStack } from '@chakra-ui/react';
 import { FC, PropsWithChildren } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/auth';
 
 const AuthenticatedApp: FC<PropsWithChildren> = ({ children }) => {
     const { initiated, authenticated } = useAuth();
-    const nav = useNavigate();
 
     if (!initiated) {
         return (

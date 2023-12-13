@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 import { FC } from 'react';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '../hooks/auth';
 
 interface Props {
     afterSignout: () => void;
