@@ -4,6 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import DatabaseProvider from './api/DatabaseProvider';
 import { AuthProvider } from './auth/AuthProvider';
 import { router } from './common/router';
 import { FirebaseProvider } from './components/FirebaseProvider';
@@ -19,6 +20,8 @@ const firebaseConfig = {
   messagingSenderId: '868016783697',
   appId: '1:868016783697:web:a721f16ac178f06f925370',
   measurementId: 'G-PWK2HF9GVW',
+  databaseURL:
+    'https://next-door-diy-default-rtdb.europe-west1.firebasedatabase.app',
 };
 const app = initializeApp(firebaseConfig);
 // we want to initialize analytics before any react code in case an error happens.
@@ -31,11 +34,13 @@ const App = () => {
     <Provider store={store}>
       <FirebaseProvider app={app} analytics={analytics}>
         <AuthProvider>
-          <ChakraProvider theme={theme}>
-            <I18nextProvider i18n={i18n} defaultNS={'translation'}>
-              <RouterProvider router={router} />
-            </I18nextProvider>
-          </ChakraProvider>
+          <DatabaseProvider>
+            <ChakraProvider theme={theme}>
+              <I18nextProvider i18n={i18n} defaultNS={'translation'}>
+                <RouterProvider router={router} />
+              </I18nextProvider>
+            </ChakraProvider>
+          </DatabaseProvider>
         </AuthProvider>
       </FirebaseProvider>
     </Provider>

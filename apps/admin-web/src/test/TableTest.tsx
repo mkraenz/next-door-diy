@@ -1,38 +1,34 @@
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { User } from '../api/database.types';
 import { DataTable } from '../components/DataTable';
+import { useDb } from '../hooks/database';
 import TableActions from './TableActions';
 
-type Subscriber = {
-  id: string;
-  username: string;
-  createdAt: string;
-  subscribedSince?: string;
-  subscribed: boolean;
-};
+// const data: User[] = [
+//   {
+//     id: 'asdf',
+//     username: 'peter',
+//     createdAt: '2021-01-01',
+//     subscribed: false,
+//   },
+//   {
+//     id: 'asdf',
+//     username: 'peter',
+//     createdAt: '2021-01-01',
+//     subscribedSince: '2021-02-02',
+//     subscribed: true,
+//   },
+// ];
 
-const data: Subscriber[] = [
-  {
-    id: 'asdf',
-    username: 'peter',
-    createdAt: '2021-01-01',
-    subscribed: false,
-  },
-  {
-    id: 'asdf',
-    username: 'peter',
-    createdAt: '2021-01-01',
-    subscribedSince: '2021-02-02',
-    subscribed: true,
-  },
-];
-
-const columnHelper = createColumnHelper<Subscriber>();
+const columnHelper = createColumnHelper<User>();
 
 const TableTest = () => {
   const { t } = useTranslation();
-  const columns = useMemo<ColumnDef<Subscriber, string>[]>(
+  const { listUsers } = useDb();
+  const [users, setUsers] = useState<User[]>([]);
+  const columns = useMemo<ColumnDef<User, string>[]>(
     // TODO check whether this rerenders on language change
     () => [
       columnHelper.accessor('id', {
@@ -58,7 +54,15 @@ const TableTest = () => {
     ],
     [t]
   );
-  return <DataTable columns={columns} data={data} />;
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      const newUsers = await listUsers();
+      setUsers(newUsers);
+    };
+    loadUsers().catch(console.error);
+  }, [setUsers, listUsers]);
+  return <DataTable columns={columns} data={users} />;
 };
 
 export default TableTest;
