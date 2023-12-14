@@ -18,7 +18,9 @@ const Layout: FC<PropsWithChildren> = ({ children }) => {
       <GridItem area={'nav'}>
         <Navbar />
       </GridItem>
-      <GridItem area={'main'}>{children}</GridItem>
+      <GridItem area={'main'} padding={4}>
+        {children}
+      </GridItem>
     </Grid>
   );
 };

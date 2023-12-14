@@ -2,14 +2,7 @@ import { HStack, Icon, IconButton, Tooltip } from '@chakra-ui/react';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiBell, FiBellOff, FiTrash } from 'react-icons/fi';
-
-type User = {
-  id: string;
-  username: string;
-  createdAt: string;
-  subscribedSince?: string;
-  subscribed: boolean;
-};
+import { User } from '../api/database.types';
 
 type Props = {
   user: User;
