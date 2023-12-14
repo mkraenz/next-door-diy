@@ -7,18 +7,21 @@ on:
 
 jobs:
   main:
+    name: ci main
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - uses: pnpm/action-setup@v2
-        name: Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
@@ -28,8 +31,8 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -39,14 +42,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - uses: nrwl/nx-set-shas@v3
+      - name: Set base and head for nx affected
+        uses: nrwl/nx-set-shas@v3
       # This line is needed for nx affected to work when CI is running on a PR
-      - run: git branch --track main origin/main
+      - name: Make nx affected work on PRs
+        run: git branch --track main origin/main
 
-      - name: Prettier check
+      - name: Prettier
         run: npx nx format:check
 
-      - name: lint, test, build affected projects
+      - name: Lint, test, build affected projects
         run: npx nx affected -t lint,test,build --parallel=3
         env:
           NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
