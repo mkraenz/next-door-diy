@@ -8,3 +8,4 @@
 **/package-lock.json
 .husky/
 .prettierignore
+.gitignore

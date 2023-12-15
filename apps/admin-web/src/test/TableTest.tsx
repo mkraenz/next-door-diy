@@ -1,9 +1,11 @@
 import { ColumnDef, createColumnHelper } from '@tanstack/react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { User } from '../api/database.types';
 import { DataTable } from '../components/DataTable';
 import { useDb } from '../hooks/database';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { manyUsersUpserted, usersSelectors } from '../users/users.slice';
 import TableActions from './TableActions';
 
 // const data: User[] = [
@@ -27,7 +29,8 @@ const columnHelper = createColumnHelper<User>();
 const TableTest = () => {
   const { t } = useTranslation();
   const { listUsers } = useDb();
-  const [users, setUsers] = useState<User[]>([]);
+  const dispatch = useAppDispatch();
+  const users = useAppSelector(usersSelectors.selectAll);
   const columns = useMemo<ColumnDef<User, string>[]>(
     // TODO check whether this rerenders on language change
     () => [
@@ -58,10 +61,10 @@ const TableTest = () => {
   useEffect(() => {
     const loadUsers = async () => {
       const newUsers = await listUsers();
-      setUsers(newUsers);
+      dispatch(manyUsersUpserted(newUsers));
     };
     loadUsers().catch(console.error);
-  }, [setUsers, listUsers]);
+  }, [dispatch, listUsers]);
   return <DataTable columns={columns} data={users} />;
 };
 

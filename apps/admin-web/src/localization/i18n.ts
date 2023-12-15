@@ -7,7 +7,6 @@ const httpApi = new HttpApi(null, {
   loadPath: '/locales/{{lng}}/{{ns}}.json',
 });
 const createI18n = () => {
-  // eslint-disable-next-line @typescript-eslint/no-floating-promises -- i18next is a singleton and the I18nProvider should take care of it hopefully
   i18next
     .use(httpApi)
     .use(LanguageDetector)
