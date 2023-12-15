@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { FiBell, FiBellOff, FiTrash } from 'react-icons/fi';
 import { User } from '../api/database.types';
 import { useDb } from '../hooks/database';
+import { useFunctions } from '../hooks/functions';
 import { useAppDispatch } from '../hooks/redux';
 import { userDeleted } from '../users/users.slice';
 
@@ -14,6 +15,7 @@ type Props = {
 const TableActions: FC<Props> = ({ user }) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { createSubscription } = useFunctions();
   const { deleteUser: deleteDbUser } = useDb();
   const deleteUser = async (username: string, id: string) => {
     const confirmed = confirm(
@@ -24,10 +26,14 @@ const TableActions: FC<Props> = ({ user }) => {
       dispatch(userDeleted(id));
     }
   };
-  const subscribeUser = (username: string, id: string) => {
-    confirm(
+  const subscribeUser = async (username: string, id: string) => {
+    const confirmed = confirm(
       `Subscribe: Are you sure you want to subscribe user '${username}' (ID ${id})?`
     );
+    if (confirmed) {
+      const res = await createSubscription();
+      console.log(res);
+    }
   };
   const unsubscribeUser = (username: string, id: string) => {
     confirm(
