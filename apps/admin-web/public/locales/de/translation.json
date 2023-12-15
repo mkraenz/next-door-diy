@@ -4,5 +4,6 @@
   "confirm": "bestätigen",
   "close": "schließen",
   "signin": "anmelden",
-  "signout": "abmelden"
+  "signout": "abmelden",
+  "deleteUser": "Benutzer löschen"
 }
