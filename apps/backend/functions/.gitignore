@@ -6,3 +6,6 @@ typings/
 
 # Node.js dependency directory
 node_modules/
+
+# param config
+.env.next-door-diy
