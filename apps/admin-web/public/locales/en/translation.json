@@ -4,5 +4,6 @@
   "confirm": "confirm",
   "close": "close",
   "signin": "sign in",
-  "signout": "sign out"
+  "signout": "sign out",
+  "deleteUser": "delete user"
 }

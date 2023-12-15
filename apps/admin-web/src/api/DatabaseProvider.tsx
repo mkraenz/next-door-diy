@@ -11,13 +11,13 @@ type DatabaseState = {
   loading: boolean;
 };
 
+const throwMissingProviderError = () => {
+  throw new Error('You need to wrap your component in a DatabaseProvider');
+};
 const defaultDatabaseState: DatabaseState = {
-  createUser: () =>
-    console.warn('defaultDatabaseState') as unknown as Promise<User>,
-  listUsers: () =>
-    console.warn('defaultDatabaseState') as unknown as Promise<User[]>,
-  deleteUser: () =>
-    console.warn('defaultDatabaseState') as unknown as Promise<void>,
+  createUser: throwMissingProviderError,
+  listUsers: throwMissingProviderError,
+  deleteUser: throwMissingProviderError,
   error: null,
   loading: false,
 };
