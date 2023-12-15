@@ -1,11 +1,14 @@
 import { Database, get, push, ref, set } from 'firebase/database';
-import { FC, PropsWithChildren, createContext, useMemo } from 'react';
+import { FC, PropsWithChildren, createContext, useMemo, useState } from 'react';
 import { useFirebase } from '../hooks/firebase';
 import { User } from './database.types';
 
 type DatabaseState = {
   createUser: (user: WithoutAutogenProps<User>) => Promise<User>;
   listUsers: () => Promise<User[]>;
+  deleteUser: (id: string) => Promise<void>;
+  error: null | Error;
+  loading: boolean;
 };
 
 const defaultDatabaseState: DatabaseState = {
@@ -13,6 +16,10 @@ const defaultDatabaseState: DatabaseState = {
     console.warn('defaultDatabaseState') as unknown as Promise<User>,
   listUsers: () =>
     console.warn('defaultDatabaseState') as unknown as Promise<User[]>,
+  deleteUser: () =>
+    console.warn('defaultDatabaseState') as unknown as Promise<void>,
+  error: null,
+  loading: false,
 };
 
 export const DatabaseContext =
@@ -22,8 +29,32 @@ type WithoutAutogenProps<T> = Omit<T, 'id' | 'createdAt'>;
 
 const userRoot = '/users/';
 
+type Deps = {
+  db: Database;
+  setLoading: (val: boolean) => void;
+  setError: (error: Error | null) => void;
+};
+const injectDeps =
+  (deps: Deps) =>
+  <U extends unknown[]>(fn: (deps: Deps) => (...args: U) => Promise<unknown>) =>
+  async (...args: U) => {
+    deps.setLoading(true);
+    try {
+      return await fn(deps)(...args);
+    } catch (error) {
+      if (error instanceof Error) deps.setError(error);
+      else
+        deps.setError(
+          new Error(typeof error === 'string' ? error : JSON.stringify(error))
+        );
+    } finally {
+      deps.setLoading(false);
+    }
+  };
+
 const createUser_ =
-  (db: Database) => async (user: WithoutAutogenProps<User>) => {
+  ({ db }: Pick<Deps, 'db'>) =>
+  async (user: WithoutAutogenProps<User>) => {
     const child = push(ref(db, userRoot));
     const userForSaving = {
       ...user,
@@ -34,24 +65,39 @@ const createUser_ =
     return userForSaving;
   };
 
-const listUsers_ = (db: Database) => async () => {
-  const snapshot = await get(ref(db, userRoot));
-  if (snapshot.exists()) {
-    return Object.values(snapshot.val() as { [key: string]: User });
-  }
-  return [] as User[];
-};
+const listUsers_ =
+  ({ db }: Pick<Deps, 'db'>) =>
+  async () => {
+    const snapshot = await get(ref(db, userRoot));
+    if (snapshot.exists()) {
+      return Object.values(snapshot.val() as { [key: string]: User });
+    }
+    return [] as User[];
+  };
+
+const deleteUser_ =
+  ({ db }: Pick<Deps, 'db'>) =>
+  async (id: string) => {
+    await set(ref(db, `${userRoot}${id}`), null);
+  };
 
 const DatabaseProvider: FC<PropsWithChildren> = ({ children }) => {
   const { db } = useFirebase();
-  const { createUser, listUsers } = useMemo(() => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<null | Error>(null);
+  const { createUser, listUsers, deleteUser } = useMemo(() => {
+    const deps = { db, setLoading, setError };
     return {
-      listUsers: listUsers_(db),
-      createUser: createUser_(db),
+      listUsers: injectDeps(deps)(listUsers_),
+      createUser: injectDeps(deps)(createUser_),
+      deleteUser: injectDeps(deps)(deleteUser_),
     };
-  }, [db]);
+  }, [db, setLoading]);
   return (
-    <DatabaseContext.Provider value={{ createUser, listUsers }}>
+    <DatabaseContext.Provider
+      // @ts-expect-error TODO #4
+      value={{ createUser, listUsers, deleteUser, error, loading }}
+    >
       {children}
     </DatabaseContext.Provider>
   );

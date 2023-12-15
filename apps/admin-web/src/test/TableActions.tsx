@@ -3,6 +3,9 @@ import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FiBell, FiBellOff, FiTrash } from 'react-icons/fi';
 import { User } from '../api/database.types';
+import { useDb } from '../hooks/database';
+import { useAppDispatch } from '../hooks/redux';
+import { userDeleted } from '../users/users.slice';
 
 type Props = {
   user: User;
@@ -10,10 +13,16 @@ type Props = {
 
 const TableActions: FC<Props> = ({ user }) => {
   const { t } = useTranslation();
-  const deleteUser = (username: string, id: string) => {
-    confirm(
+  const dispatch = useAppDispatch();
+  const { deleteUser: deleteDbUser } = useDb();
+  const deleteUser = async (username: string, id: string) => {
+    const confirmed = confirm(
       `Delete: Are you sure you want to delete user '${username}' (ID ${id}) and all associated data to the user? This can not be undone!`
     );
+    if (confirmed) {
+      await deleteDbUser(id);
+      dispatch(userDeleted(id));
+    }
   };
   const subscribeUser = (username: string, id: string) => {
     confirm(
