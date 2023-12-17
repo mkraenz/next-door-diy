@@ -13,17 +13,10 @@ import createI18n from './localization/i18n';
 import { store } from './store';
 import { theme } from './theme';
 
-const firebaseConfig: FirebaseOptions = {
-  apiKey: 'AIzaSyAAnOz7BKrcElsArn6Ry77j72tGjvbXphU',
-  authDomain: 'next-door-diy.firebaseapp.com',
-  projectId: 'next-door-diy',
-  storageBucket: 'next-door-diy.appspot.com',
-  messagingSenderId: '868016783697',
-  appId: '1:868016783697:web:a721f16ac178f06f925370',
-  measurementId: 'G-PWK2HF9GVW',
-  databaseURL:
-    'https://next-door-diy-default-rtdb.europe-west1.firebasedatabase.app',
-};
+const firebaseConfig: FirebaseOptions = JSON.parse(
+  import.meta.env.VITE_FIREBASE_CONFIG
+);
+
 const app = initializeApp(firebaseConfig);
 // we want to initialize analytics before any react code in case an error happens.
 const analytics = getAnalytics(app);
