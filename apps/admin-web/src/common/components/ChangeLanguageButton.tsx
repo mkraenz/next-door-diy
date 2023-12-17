@@ -39,7 +39,7 @@ const ChangeLanguageButton: FC = () => {
       />
       <MenuList>
         {languages.map(({ nameInTargetLanguage, code, flag }) => (
-          <MenuItem onClick={() => changeLanguage(code)}>
+          <MenuItem key={code} onClick={() => changeLanguage(code)}>
             {flag} {nameInTargetLanguage}
           </MenuItem>
         ))}

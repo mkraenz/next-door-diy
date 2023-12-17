@@ -1,5 +1,5 @@
 import { Divider, VStack } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, Fragment } from 'react';
 import { FirebaseFunctionsState } from '../api/FirebaseFunctionsProvider';
 import CloudFunction from './CloudFunction';
 
@@ -24,10 +24,10 @@ const FunctionsPage: FC = () => {
   return (
     <VStack>
       {data.map((item) => (
-        <>
+        <Fragment key={item.name}>
           <CloudFunction {...item} />
           <Divider />
-        </>
+        </Fragment>
       ))}
     </VStack>
   );

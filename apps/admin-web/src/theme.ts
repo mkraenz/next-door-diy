@@ -28,6 +28,11 @@ export const theme = extendTheme(
       defaultProps: {
         variant: 'base',
       },
+      Tooltip: {
+        baseStyle: {
+          _firstLetter: { textTransform: 'capitalize' },
+        },
+      },
     },
   },
   withDefaultColorScheme({ colorScheme: 'blue' })
