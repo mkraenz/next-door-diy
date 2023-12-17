@@ -2,13 +2,18 @@ import {
   Button,
   FormControl,
   FormErrorMessage,
+  Icon,
+  IconButton,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/auth';
 
@@ -21,6 +26,7 @@ const LoginForm: FC = () => {
   const { error, signIn } = useAuth();
   const nav = useNavigate();
   const { t } = useTranslation();
+  const [passwordShown, showPassword] = useState(false);
 
   const {
     handleSubmit,
@@ -32,6 +38,7 @@ const LoginForm: FC = () => {
     await signIn(data);
     nav('/');
   });
+  const togglePasswordVisibility = () => showPassword(!passwordShown);
 
   return (
     <form onSubmit={onSubmit}>
@@ -40,16 +47,16 @@ const LoginForm: FC = () => {
           <Input
             type="email"
             id="email"
-            placeholder="Email"
+            placeholder={t('Email')}
             {...register('email', {
-              required: 'This is required',
+              required: t('This is required'),
               minLength: {
                 value: 4,
-                message: 'Minimum length should be 4',
+                message: t('Minimum length should be 4'),
               },
               pattern: {
                 value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+.[A-Za-z]{2,}$/,
-                message: 'Invalid email address',
+                message: t('Invalid email address'),
               },
             })}
           />
@@ -58,26 +65,43 @@ const LoginForm: FC = () => {
           </FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={Boolean(errors.password)}>
-          <Input
-            type="password"
-            id="password"
-            placeholder="Password"
-            {...register('password', {
-              required: 'This is required',
-              minLength: {
-                value: 8,
-                message: 'Minimum length should be 8',
-              },
-            })}
-          />
-          <FormErrorMessage>
-            {errors.password && errors.password.message}
-          </FormErrorMessage>
+          <InputGroup size="md">
+            <Input
+              type={passwordShown ? 'text' : 'password'}
+              id="password"
+              placeholder={t('Password')}
+              {...register('password', {
+                required: t('This is required'),
+                minLength: {
+                  value: 8,
+                  message: t('Minimum length should be 8'),
+                },
+              })}
+            />
+            <InputRightElement>
+              <IconButton
+                onClick={togglePasswordVisibility}
+                icon={<Icon as={passwordShown ? FiEyeOff : FiEye} />}
+                aria-label={
+                  passwordShown ? t('Hide password') : t('Show password')
+                }
+                size={'xs'}
+                variant={'outline'}
+                color={'gray.500'}
+                _hover={{
+                  color: 'blue.500',
+                }}
+              ></IconButton>
+            </InputRightElement>
+            <FormErrorMessage>
+              {errors.password && errors.password.message}
+            </FormErrorMessage>
+          </InputGroup>
         </FormControl>
         <Button mt={4} isLoading={isSubmitting} type="submit">
           {t('signin')}
         </Button>
-        <Text color="red">{error && 'Invalid credentials.'}</Text>
+        <Text color="red">{error && t('Invalid credentials.')}</Text>
       </VStack>
     </form>
   );
