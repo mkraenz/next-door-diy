@@ -1,9 +1,9 @@
 import { Analytics } from 'firebase/analytics';
 import { FirebaseApp } from 'firebase/app';
-import { Auth, getAuth } from 'firebase/auth';
-import { Database, getDatabase } from 'firebase/database';
-import { Functions, getFunctions } from 'firebase/functions';
-import { FC, PropsWithChildren, createContext, useMemo } from 'react';
+import { Auth } from 'firebase/auth';
+import { Database } from 'firebase/database';
+import { Functions } from 'firebase/functions';
+import { FC, PropsWithChildren, createContext } from 'react';
 
 type FirebaseState = {
   auth: Auth;
@@ -21,18 +21,14 @@ export const FirebaseContext =
   createContext<FirebaseState>(defaultFirebaseState);
 
 export const FirebaseProvider: FC<
-  PropsWithChildren<{ app: FirebaseApp; analytics: Analytics }>
-> = ({ children, app }) => {
-  const { auth, db, functions } = useMemo(
-    () => ({
-      // TODO should this be done on top level instead? Check by writing an actual test
-      auth: getAuth(app),
-      db: getDatabase(app),
-      functions: getFunctions(app, 'europe-west1'),
-    }),
-    [app]
-  );
-
+  PropsWithChildren<{
+    app: FirebaseApp;
+    analytics: Analytics;
+    db: Database;
+    functions: Functions;
+    auth: Auth;
+  }>
+> = ({ children, db, functions, auth }) => {
   return (
     <FirebaseContext.Provider value={{ auth, db, functions }}>
       {children}

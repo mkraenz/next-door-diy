@@ -8,22 +8,6 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { manyUsersUpserted, usersSelectors } from '../users/users.slice';
 import TableActions from './TableActions';
 
-// const data: User[] = [
-//   {
-//     id: 'asdf',
-//     username: 'peter',
-//     createdAt: '2021-01-01',
-//     subscribed: false,
-//   },
-//   {
-//     id: 'asdf',
-//     username: 'peter',
-//     createdAt: '2021-01-01',
-//     subscribedSince: '2021-02-02',
-//     subscribed: true,
-//   },
-// ];
-
 const columnHelper = createColumnHelper<User>();
 
 const TableTest = () => {
@@ -36,23 +20,23 @@ const TableTest = () => {
     () => [
       columnHelper.accessor('id', {
         cell: (info) => info.getValue(),
-        header: t('ID'),
+        header: t('id'),
       }),
       columnHelper.accessor('username', {
         cell: (info) => <p>{info.getValue()}</p>,
-        header: t('Username'),
+        header: t('username'),
       }),
       columnHelper.accessor('createdAt', {
-        cell: (info) => info.getValue(),
-        header: t('Created At'),
+        cell: (info) => t('datetime', { val: new Date(info.getValue()) }),
+        header: t('createdAt'),
       }),
       columnHelper.accessor('subscribedSince', {
-        cell: (info) => info.getValue() ?? t('n/a'),
-        header: t('Subscribed Since'),
+        cell: (info) => info.getValue() ?? t('notAvailable'),
+        header: t('subscribedSince'),
       }),
       columnHelper.display({
         cell: ({ row: { original: user } }) => <TableActions user={user} />,
-        header: t('Actions'),
+        header: t('actions'),
       }),
     ],
     [t]

@@ -25,5 +25,12 @@
   "executionFailedFrontendResult": "Fehlermeldung im Frontend:",
   "unknownError": "Unbekannter Fehler",
   "executionFailedStringifyingErrorFailed": "Fehlerobjekts konnte nicht stringifyed werden.",
-  "executionFailedFrontendResultStringified": "Stringifyed Fehlerobject:"
+  "executionFailedFrontendResultStringified": "Stringifyed Fehlerobject:",
+  "id": "ID",
+  "username": "Benutzername",
+  "createdAt": "Erstellt am",
+  "subscribedSince": "Abonniert seit",
+  "actions": "Aktionen",
+  "notAvailable": "n.a.",
+  "datetime": "{{value, datetime}}"
 }
