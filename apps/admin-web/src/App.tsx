@@ -5,7 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import DatabaseProvider from './api/DatabaseProvider';
-import FirebaseFunctionsProvider from './api/FunctionsProvider';
+import FirebaseFunctionsProvider from './api/FirebaseFunctionsProvider';
 import { AuthProvider } from './auth/AuthProvider';
 import { router } from './common/router';
 import { FirebaseProvider } from './components/FirebaseProvider';

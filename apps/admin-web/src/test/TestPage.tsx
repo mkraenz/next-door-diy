@@ -5,7 +5,7 @@ import { useAppDispatch } from '../hooks/redux';
 import { userAdded } from '../users/users.slice';
 import TableTest from './TableTest';
 
-const Test = () => {
+const TestPage = () => {
   const { t } = useTranslation();
   const { createUser } = useDb();
   const dispatch = useAppDispatch();
@@ -20,11 +20,11 @@ const Test = () => {
   return (
     <VStack>
       <HStack width={'full'} justify={'flex-end'}>
-        <Button onClick={handlePress}>{t('add user')}</Button>
+        <Button onClick={handlePress}>{t('userAdd')}</Button>
       </HStack>
       <TableTest />;
     </VStack>
   );
 };
 
-export default Test;
+export default TestPage;

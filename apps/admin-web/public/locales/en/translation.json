@@ -5,5 +5,16 @@
   "close": "close",
   "signin": "sign in",
   "signout": "sign out",
-  "deleteUser": "delete user"
+  "deleteUser": "delete user",
+  "changeLanguage": "change language",
+  "closeDrawerNav": "Close navigation menu",
+  "openDrawerNav": "Open navigation menu",
+  "userAdd": "Add user",
+  "execute": "execute",
+  "confirmFunctionExecutionDialogHeader": "Execute function {{name}}",
+  "confirmFunctionExecutionDialogBody": "Are you sure you want to execute function {{name}}? If you are unsure what this is or what consequences it has, please abort in any case!",
+  "executeButton": "Execute",
+  "executing": "executing...",
+  "hurray": "Hurray! Close dialog.",
+  "executedSuccessfully": "Function executed successfully!"
 }
