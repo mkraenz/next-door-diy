@@ -26,7 +26,7 @@ const CloudFunction: FC<Props> = ({ name, description, functionName }) => {
   useEffect(() => {
     if (error) errorDialog.onOpen();
     if (success) successDialog.onOpen();
-  }, [error, success]);
+  }, [error, success, successDialog, errorDialog]);
 
   const onConfirm = async () => {
     await func();
