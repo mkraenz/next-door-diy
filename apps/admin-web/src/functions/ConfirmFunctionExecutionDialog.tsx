@@ -10,32 +10,26 @@ import {
 } from '@chakra-ui/react';
 import { FC, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FirebaseFunctionsState } from '../api/FirebaseFunctionsProvider';
-import { useFunctions } from '../hooks/functions';
-import useFunctionCall from '../hooks/useFunctionCall';
 
 type Props = {
   onClose: () => void;
   isOpen: boolean;
   name: string;
-  functionName: keyof FirebaseFunctionsState;
+  onConfirm: () => void;
+  executing: boolean;
 };
 
 const ConfirmFunctionExecutionDialog: FC<Props> = ({
-  functionName,
+  onConfirm,
   isOpen,
   name,
   onClose,
+  executing,
 }) => {
-  const funcs = useFunctions();
-  // TODO #4 move this one level higher, have a success dialog, and an error dialog
-  const { func, loading, success } = useFunctionCall(funcs[functionName]);
   const cancelRef = useRef<any>();
   const { t } = useTranslation();
 
-  const onConfirm = async () => {
-    await func();
-  };
+  const success = false; // TODO #4 move upwards
 
   return (
     <AlertDialog
@@ -44,35 +38,36 @@ const ConfirmFunctionExecutionDialog: FC<Props> = ({
       onClose={onClose}
       isOpen={isOpen}
       isCentered
+      closeOnOverlayClick={!executing}
     >
       <AlertDialogOverlay />
 
       <AlertDialogContent>
-        <AlertDialogHeader>
+        <AlertDialogHeader textTransform={'capitalize'}>
           {t('confirmFunctionExecutionDialogHeader', { name })}
         </AlertDialogHeader>
-        <AlertDialogCloseButton />
-        <AlertDialogBody>
-          {success
-            ? t('executedSuccessfully')
+        <AlertDialogCloseButton disabled={executing} />
+        <AlertDialogBody _firstLetter={{ textTransform: 'uppercase' }}>
+          {executing
+            ? t('executing')
             : t('confirmFunctionExecutionDialogBody', { name })}
         </AlertDialogBody>
         <AlertDialogFooter>
-          {!loading && !success && (
+          {!executing && (
             <Button ref={cancelRef} onClick={onClose}>
               {t('cancel')}
             </Button>
           )}
-          {!success && (
+          {
             <Button
               colorScheme="red"
               ml={3}
-              isLoading={loading}
+              isLoading={executing}
               onClick={onConfirm}
             >
-              {loading ? t('executing') : t('executeButton')}
+              {t('executeButton')}
             </Button>
-          )}
+          }
           {success && (
             <Button colorScheme="green" onClick={onClose}>
               {t('hurray')}

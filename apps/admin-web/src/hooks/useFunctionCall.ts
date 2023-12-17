@@ -7,8 +7,10 @@ const useFunctionCall = <F extends (...args: any[]) => Promise<any>>(
   func: F;
   loading: boolean;
   error: Error | null;
-  /** null during execution, true if function executed successfully, false on error. */
+  /** `null` during execution, `true` if function executed successfully, `false` on error. */
   success: boolean | null;
+  /** resets loading, success, and error to its default values */
+  reset: () => void;
 } => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean | null>(null);
@@ -41,7 +43,12 @@ const useFunctionCall = <F extends (...args: any[]) => Promise<any>>(
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- no way to statically check this
   }, depsList);
-  return { func: wrappedFunc as any, loading, error, success };
+  const reset = useCallback(() => {
+    setLoading(false);
+    setSuccess(null);
+    setError(null);
+  }, [setLoading, setSuccess, setError]);
+  return { func: wrappedFunc as any, loading, error, success, reset };
 };
 
 export default useFunctionCall;
