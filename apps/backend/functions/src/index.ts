@@ -1,6 +1,6 @@
 import * as logger from 'firebase-functions/logger';
 import { defineList, defineString } from 'firebase-functions/params';
-import { onCall, onRequest } from 'firebase-functions/v2/https';
+import { HttpsError, onCall, onRequest } from 'firebase-functions/v2/https';
 import { setGlobalOptions } from 'firebase-functions/v2/options';
 
 const region = defineList('REGIONS', {
@@ -31,8 +31,10 @@ export const helloWorld = onRequest((request, response) => {
 export const createSubscription = onCall(async (request) => {
   const uid = request.auth?.uid;
   logger.debug('called by uid:', uid);
-  if (!uid) throw new Error('Unauthenticated');
-  if (!isAdminUser(uid)) throw new Error('Unauthorized');
+  if (!uid) throw new HttpsError('unauthenticated', 'Unauthenticated');
+  if (!isAdminUser(uid))
+    throw new HttpsError('permission-denied', 'Unauthorized');
+
   return {
     success: true,
   };
