@@ -24,5 +24,12 @@
   "executionFailedFrontendResult": "Error message in the frontend:",
   "executionFailedStringifyingErrorFailed": "Could not stringify error object.",
   "executionFailedFrontendResultStringified": "Stringified error object:",
-  "unknownError": "Unknown error"
+  "unknownError": "Unknown error",
+  "id": "ID",
+  "username": "Username",
+  "createdAt": "Created at",
+  "subscribedSince": "Subscribed since",
+  "actions": "Actions",
+  "notAvailable": "n/a",
+  "datetime": "{{value, datetime}}"
 }

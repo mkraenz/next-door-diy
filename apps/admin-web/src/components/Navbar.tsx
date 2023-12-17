@@ -58,6 +58,7 @@ const Navbar: FC = () => {
           ref={btnRef}
           onClick={onOpen}
           m={2}
+          mt={4}
         />
       </Tooltip>
       <Drawer

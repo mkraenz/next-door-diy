@@ -29,8 +29,6 @@ const ConfirmFunctionExecutionDialog: FC<Props> = ({
   const cancelRef = useRef<any>();
   const { t } = useTranslation();
 
-  const success = false; // TODO #4 move upwards
-
   return (
     <AlertDialog
       motionPreset="slideInBottom"
@@ -68,11 +66,6 @@ const ConfirmFunctionExecutionDialog: FC<Props> = ({
               {t('executeButton')}
             </Button>
           }
-          {success && (
-            <Button colorScheme="green" onClick={onClose}>
-              {t('hurray')}
-            </Button>
-          )}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
