@@ -1,10 +1,4 @@
-import {
-  ArrowRightIcon,
-  CalendarIcon,
-  ChatIcon,
-  EmailIcon,
-  TimeIcon,
-} from '@chakra-ui/icons';
+import { ArrowRightIcon } from '@chakra-ui/icons';
 import {
   Button,
   Drawer,
@@ -14,23 +8,27 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  HStack,
+  Icon,
   IconButton,
   Stack,
   Tooltip,
+  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import type { FC } from 'react';
-import React from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FiBell, FiCode } from 'react-icons/fi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LogoutButton from '../auth/LogoutButton';
+import ChangeLanguageButton from '../common/components/ChangeLanguageButton';
+import ThemeToggleButton from '../common/components/ThemeToggleButton';
 
 const homeRoute = '/';
 const navData = [
-  { nameTKey: 'Calendar', href: '/calendar', icon: CalendarIcon },
-  { nameTKey: 'Availabilities', href: '/availabilities', icon: TimeIcon },
-  { nameTKey: 'Contacts', href: '/contacts', icon: ChatIcon },
-  { nameTKey: 'Bookings', href: '/bookings', icon: EmailIcon },
+  { nameTKey: 'Subscriptions', href: '/subscriptions', icon: FiBell },
+  { nameTKey: 'Functions', href: '/functions', icon: FiCode },
 ] satisfies {
   nameTKey: string;
   href: string;
@@ -43,7 +41,9 @@ const Navbar: FC = () => {
   const nav = useNavigate();
   const location = useLocation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef<HTMLButtonElement>(null);
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const routeHoverBg = useColorModeValue('blue.200', 'blue.700');
+  const activeRouteBg = useColorModeValue('blue.100', 'blue.800');
 
   const handleClick = (href: string) => {
     nav(href);
@@ -51,10 +51,10 @@ const Navbar: FC = () => {
   };
   return (
     <>
-      <Tooltip label={t('Open drawer navigation')}>
+      <Tooltip label={t('openDrawerNav')}>
         <IconButton
           icon={<ArrowRightIcon />}
-          aria-label={t('Open drawer navigation')}
+          aria-label={t('openDrawerNav')}
           ref={btnRef}
           onClick={onOpen}
           m={2}
@@ -68,7 +68,7 @@ const Navbar: FC = () => {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton aria-label={t('Close drawer navigation')} />
+          <DrawerCloseButton aria-label={t('closeDrawerNav')} />
           <DrawerHeader
             cursor={'pointer'}
             onClick={() => handleClick(homeRoute)}
@@ -89,13 +89,15 @@ const Navbar: FC = () => {
                   <Button
                     variant="nav"
                     key={item.nameTKey}
-                    leftIcon={<item.icon boxSize={6} />}
+                    leftIcon={<Icon as={item.icon} boxSize={6} />}
                     width={'full'}
                     justifyContent={'flex-start'}
                     bg={
-                      location.pathname === item.href ? 'blue.100' : undefined
+                      location.pathname === item.href
+                        ? activeRouteBg
+                        : undefined
                     }
-                    _hover={{ bg: 'blue.200' }}
+                    _hover={{ bg: routeHoverBg }}
                   >
                     {t(item.nameTKey)}
                   </Button>
@@ -104,7 +106,11 @@ const Navbar: FC = () => {
             </Stack>
           </DrawerBody>
           <DrawerFooter borderTopWidth="1px">
-            <LogoutButton afterSignout={onClose} />
+            <HStack>
+              <ThemeToggleButton />
+              <ChangeLanguageButton />
+              <LogoutButton afterSignout={onClose} />
+            </HStack>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

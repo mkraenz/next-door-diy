@@ -2,7 +2,7 @@ import { httpsCallable } from 'firebase/functions';
 import { FC, PropsWithChildren, createContext, useCallback } from 'react';
 import { useFirebase } from '../hooks/firebase';
 
-type FirebaseFunctionsState = {
+export type FirebaseFunctionsState = {
   createSubscription: ReturnType<
     typeof httpsCallable<never, { success: true }>
   >;
@@ -21,6 +21,7 @@ export const FirebaseFunctionsContext =
 
 const FirebaseFunctionsProvider: FC<PropsWithChildren> = ({ children }) => {
   const { functions } = useFirebase();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- not a useful suggestion by react-hooks/exhaustive-deps to pass an array function
   const createSubscription = useCallback(
     httpsCallable<never, { success: true }>(functions, 'createSubscription'),
     [functions]
