@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { getAnalytics } from 'firebase/analytics';
+import { Analytics, getAnalytics } from 'firebase/analytics';
 import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
@@ -22,8 +22,12 @@ const firebaseConfig: FirebaseOptions = JSON.parse(
 
 const app = initializeApp(firebaseConfig);
 // we want to initialize analytics before any react code in case an error happens.
-const analytics = getAnalytics(app);
+const analytics =
+  import.meta.env.VITE_ENABLE_ANALYTICS === 'true'
+    ? getAnalytics(app)
+    : ({} as Analytics);
 const fbProps = {
+  analytics,
   app,
   auth: getAuth(app),
   db: getDatabase(app),
@@ -35,7 +39,7 @@ const i18n = createI18n();
 const App = () => {
   return (
     <Provider store={store}>
-      <FirebaseProvider analytics={analytics} {...fbProps}>
+      <FirebaseProvider {...fbProps}>
         <AuthProvider>
           <DatabaseProvider>
             <FirebaseFunctionsProvider>
