@@ -1,4 +1,12 @@
-import { Database, get, push, ref, set } from 'firebase/database';
+import {
+  Database,
+  get,
+  limitToLast,
+  push,
+  query,
+  ref,
+  set,
+} from 'firebase/database';
 import { FC, PropsWithChildren, createContext, useMemo, useState } from 'react';
 import { useFirebase } from '../hooks/firebase';
 import { User } from './database.types';
@@ -56,9 +64,13 @@ const createUser_ =
   ({ db }: Pick<Deps, 'db'>) =>
   async (user: WithoutAutogenProps<User>) => {
     const child = push(ref(db, userRoot));
+    if (!child.key)
+      throw new Error(
+        'child.key is nil. Please make sure you create a proper id'
+      );
     const userForSaving = {
       ...user,
-      id: child.key ?? '',
+      id: child.key,
       createdAt: new Date().toISOString(),
     };
     await set(child, userForSaving);
@@ -67,10 +79,14 @@ const createUser_ =
 
 const listUsers_ =
   ({ db }: Pick<Deps, 'db'>) =>
-  async () => {
-    const snapshot = await get(ref(db, userRoot));
+  // TODO offset
+  async ({ limit } = { limit: 10 }) => {
+    const q = query(ref(db, userRoot), limitToLast(limit));
+    const snapshot = await get(q);
     if (snapshot.exists()) {
-      return Object.values(snapshot.val() as { [key: string]: User });
+      const val = snapshot.val() as { [key: string]: User };
+      const users = Object.values(val).filter((user) => user?.id !== undefined);
+      return users;
     }
     return [] as User[];
   };
